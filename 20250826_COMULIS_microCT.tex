@@ -23,52 +23,66 @@
 	maxnames=1,
 	sorting=none]{biblatex}
 \addbibresource{../../Documents/library.bib}% FastSSD, Windows or Mac works (on Linux/FastSSD we generated a 'Document' folder at the correct level and `ln -s ~/P/Documents/library.bib .` to it)
-\usepackage{standalone}
-\usepackage{tikz}
-	\usetikzlibrary{spy}
-	\tikzset{shadowed/.style={preaction={transform canvas={shift={(1pt,-1pt)}},draw=ubRed}}}
-\usepackage{shadowtext}% for the shadowed scalebar
-	\shadowoffset{1pt}
-	\shadowcolor{ubRed}
-\usepackage{pgfplots}
-	\pgfplotsset{compat=newest}
+\usepackage{microtype}
 \usepackage[detect-all=true,
 	range-phrase=--,
 	range-units=single,
 	per-mode=symbol,
 	per-symbol=/]{siunitx}
-\usepackage{microtype}
-\usepackage[absolute,overlay]{textpos}%for the \source{} command
-\usepackage[missing=main]{gitinfo2}% GitHub Actions don't pull in the commit hash, so we just show `main`
 \usepackage{xspace}
-\usepackage{ccicons}
-\usepackage[version=4]{mhchem}
-\usepackage{animate}
-\usepackage{fontawesome5}
 \usepackage{csquotes}
-\usepackage{listings}
-	\lstset{frame=single,
-		%backgroundcolor = \color{lightgray},
-		basicstyle=\tiny\ttfamily
-		}
 \usepackage{pgfplotstable}
+ 	\pgfplotsset{compat=newest}
 \usepackage{booktabs}
 \usepackage{colortbl}
-\usepackage{multirow}
-\usepackage{mathastext}
+\usepackage{ccicons}
+\usepackage{animate}
+\usepackage{fontawesome5}
+\usepackage{tikz}
+% 	\usetikzlibrary{spy}
+ 	\tikzset{shadowed/.style={preaction={transform canvas={shift={(1pt,-1pt)}},draw=ubRed}}}
 
-% change tikz font to slide font
-% https://tex.stackexchange.com/a/33329/828
-\usepackage[eulergreek]{sansmath}
-	\pgfplotsset{tick label style = {font=\sansmath\sffamily},
-		every axis label = {font=\sansmath\sffamily},
-		legend style = {font=\sansmath\sffamily},
-		label style = {font=\sansmath\sffamily}
+\usepackage{listings}
+	\lstset{frame=single,
+		backgroundcolor = \color{ubGrey!38.2},
+		basicstyle=\tiny\ttfamily
 		}
 
-% Globally thicker lines in with tikz
-% https://tex.stackexchange.com/a/206769/828
-\tikzset{every picture/.style={thick}}
+\usepackage{shadowtext}% for the shadowed scalebar
+	\shadowoffset{1pt}
+	\shadowcolor{ubRed}
+
+% \usepackage{pgfplots}
+
+% \usepackage{standalone}
+
+
+% \usepackage[absolute,overlay]{textpos}%for the \source{} command
+% \usepackage[missing=main]{gitinfo2}% GitHub Actions don't pull in the commit hash, so we just show `main`
+
+
+% \usepackage[version=4]{mhchem}
+
+
+
+
+
+
+% \usepackage{multirow}
+% \usepackage{mathastext}
+
+% % change tikz font to slide font
+% % https://tex.stackexchange.com/a/33329/828
+% \usepackage[eulergreek]{sansmath}
+% 	\pgfplotsset{tick label style = {font=\sansmath\sffamily},
+% 		every axis label = {font=\sansmath\sffamily},
+% 		legend style = {font=\sansmath\sffamily},
+% 		label style = {font=\sansmath\sffamily}
+% 		}
+
+% % Globally thicker lines in with tikz
+% % https://tex.stackexchange.com/a/206769/828
+% \tikzset{every picture/.style={thick}}
 
 % Acknowledge images just below them
 % Based on https://tex.stackexchange.com/a/282637/828
@@ -80,14 +94,6 @@
 			}%
 		}%
 	}%
-\newcommand{\sourcecite}[2]{%
-	% Cite (an image from) a reference
-	\raisebox{-1.618ex}{%
-		\makebox[0pt][r]{%
-			\scriptsize From \cite{#1}, #2%
-			}%
-		}%
-	}%
 \newcommand{\sourcelink}[3]{%
 	% Make the source command an \href{link}{text}
 	\raisebox{-1.618ex}{%
@@ -96,83 +102,91 @@
 			}%
 		}%
 	}%
-
-% Define us a custom footer *with* progress bar, based on https://tex.stackexchange.com/a/59749/828
-\makeatletter
-\def\progressbar@progressbar{}% the progress bar
-\newcount\progressbar@tmpcounta% auxiliary counter
-\newcount\progressbar@tmpcountb% auxiliary counter
-\newdimen\progressbar@pbht%progressbar height
-\newdimen\progressbar@pbwd%progressbar width
-\newdimen\progressbar@rcircle% radius for the circle
-\newdimen\progressbar@tmpdim% auxiliary dimension
-\progressbar@pbwd=0.85\linewidth%
-\progressbar@rcircle=1.5pt%
-\def\progressbar@progressbar{%
-	\progressbar@tmpcounta=\insertframenumber%
-	\progressbar@tmpcountb=\inserttotalframenumber%
-	\progressbar@tmpdim=\progressbar@pbwd%
-	\multiply\progressbar@tmpdim by \progressbar@tmpcounta%
-	\divide\progressbar@tmpdim by \progressbar@tmpcountb%
-	\par%
-	\mode<beamer>{\begin{tikzpicture}%
-		\draw[ubGrey] (0,0) -- ++ (\progressbar@pbwd,0);%
-		\draw[draw=ubRed,fill=ubGrey]
-(\the\dimexpr\progressbar@tmpdim-\progressbar@rcircle\relax,.5\progressbar@pbht
-) circle (\progressbar@rcircle);%
-	\end{tikzpicture}%
-	\hfill}bit.ly/cmls\xspace|\xspace%
-	v.
-\href{https://github.com/habi/Talk.2025.COMULIS/commit/\gitHash}{\gitAbbrevHash
-}\xspace|\xspace%
-	p.\xspace\insertframenumber/\inserttotalframenumber%
-	\hspace*{4ex}%
-	\vspace{0.5ex}%
-}
-
-\addtobeamertemplate{footline}{}%
-{%
-	\begin{beamercolorbox}[wd=\paperwidth,center]{white}%
-		\progressbar@progressbar%
-	\end{beamercolorbox}%
-}%
-\makeatother
-
-% Format bibliography for beamer
-% http://tex.stackexchange.com/a/10686/828
-\renewbibmacro{in:}{}
-% http://tex.stackexchange.com/a/13076/828
-\AtEveryBibitem{%
-	\clearfield{journaltitle}
-	\clearfield{pages}
-	\clearfield{volume}
-	\clearfield{number}
-	\clearname{editor}
-	\clearfield{issn}
-	\clearfield{year}
-}
-% No parentheses around the (now empty) year: https://tex.stackexchange.com/a/147537/828
-\renewcommand{\bibopenparen}{\addcomma\addspace}
-\renewcommand{\bibcloseparen}{\addcomma\addspace}
-
-% Redefine \footcite based on https://tex.stackexchange.com/a/453528/828
-\DeclareCiteCommand{\footcite}[\mkbibfootnote]{%
-	\usebibmacro{prenote}}{%
-		\printnames[family-given]{labelname}%
-		\newunit%
-		\addcolon\space\thefield{url}% print only the field, but not the name of the field
-		\newunit%
-		\printlabeldateextra%
-	}{\addsemicolon\space}{%
-		\usebibmacro{postnote}%
+\newcommand{\sourcecite}[2]{%
+	% Cite (an image from) a reference
+	\raisebox{-1.618ex}{%
+		\makebox[0pt][r]{%
+			\scriptsize From \cite{#1}, #2%
+			}%
+		}%
 	}%
 
-% References as footnotes at the bottom of the slides
-% https://tex.stackexchange.com/a/368760/828
-\makeatletter
-\renewcommand\@makefnmark{\xspace\hbox{\usebeamercolor[fg]{footnote mark}\usebeamerfont*{footnote mark}[\@thefnmark]}}
-\renewcommand\@makefntext[1]{\tiny{\usebeamercolor[fg]{footnote mark}\usebeamerfont*{footnote mark}[\@thefnmark]}\enspace\usebeamerfont*{footnote} #1}
-\makeatother
+% % Define us a custom footer *with* progress bar, based on https://tex.stackexchange.com/a/59749/828
+% \makeatletter
+% \def\progressbar@progressbar{}% the progress bar
+% \newcount\progressbar@tmpcounta% auxiliary counter
+% \newcount\progressbar@tmpcountb% auxiliary counter
+% \newdimen\progressbar@pbht%progressbar height
+% \newdimen\progressbar@pbwd%progressbar width
+% \newdimen\progressbar@rcircle% radius for the circle
+% \newdimen\progressbar@tmpdim% auxiliary dimension
+% \progressbar@pbwd=0.85\linewidth%
+% \progressbar@rcircle=1.5pt%
+% \def\progressbar@progressbar{%
+% 	\progressbar@tmpcounta=\insertframenumber%
+% 	\progressbar@tmpcountb=\inserttotalframenumber%
+% 	\progressbar@tmpdim=\progressbar@pbwd%
+% 	\multiply\progressbar@tmpdim by \progressbar@tmpcounta%
+% 	\divide\progressbar@tmpdim by \progressbar@tmpcountb%
+% 	\par%
+% 	\mode<beamer>{\begin{tikzpicture}%
+% 		\draw[ubGrey] (0,0) -- ++ (\progressbar@pbwd,0);%
+% 		\draw[draw=ubRed,fill=ubGrey]
+% (\the\dimexpr\progressbar@tmpdim-\progressbar@rcircle\relax,.5\progressbar@pbht
+% ) circle (\progressbar@rcircle);%
+% 	\end{tikzpicture}%
+% 	\hfill}bit.ly/cmls\xspace|\xspace%
+% 	v.
+% \href{https://github.com/habi/Talk.2025.COMULIS/commit/\gitHash}{\gitAbbrevHash
+% }\xspace|\xspace%
+% 	p.\xspace\insertframenumber/\inserttotalframenumber%
+% 	\hspace*{4ex}%
+% 	\vspace{0.5ex}%
+% }
+
+% \addtobeamertemplate{footline}{}%
+% {%
+% 	\begin{beamercolorbox}[wd=\paperwidth,center]{white}%
+% 		\progressbar@progressbar%
+% 	\end{beamercolorbox}%
+% }%
+% \makeatother
+
+% % Format bibliography for beamer
+% % http://tex.stackexchange.com/a/10686/828
+% \renewbibmacro{in:}{}
+% % http://tex.stackexchange.com/a/13076/828
+% \AtEveryBibitem{%
+% 	\clearfield{journaltitle}
+% 	\clearfield{pages}
+% 	\clearfield{volume}
+% 	\clearfield{number}
+% 	\clearname{editor}
+% 	\clearfield{issn}
+% 	\clearfield{year}
+% }
+% % No parentheses around the (now empty) year: https://tex.stackexchange.com/a/147537/828
+% \renewcommand{\bibopenparen}{\addcomma\addspace}
+% \renewcommand{\bibcloseparen}{\addcomma\addspace}
+
+% % Redefine \footcite based on https://tex.stackexchange.com/a/453528/828
+% \DeclareCiteCommand{\footcite}[\mkbibfootnote]{%
+% 	\usebibmacro{prenote}}{%
+% 		\printnames[family-given]{labelname}%
+% 		\newunit%
+% 		\addcolon\space\thefield{url}% print only the field, but not the name of the field
+% 		\newunit%
+% 		\printlabeldateextra%
+% 	}{\addsemicolon\space}{%
+% 		\usebibmacro{postnote}%
+% 	}%
+
+% % References as footnotes at the bottom of the slides
+% % https://tex.stackexchange.com/a/368760/828
+% \makeatletter
+% \renewcommand\@makefnmark{\xspace\hbox{\usebeamercolor[fg]{footnote mark}\usebeamerfont*{footnote mark}[\@thefnmark]}}
+% \renewcommand\@makefntext[1]{\tiny{\usebeamercolor[fg]{footnote mark}\usebeamerfont*{footnote mark}[\@thefnmark]}\enspace\usebeamerfont*{footnote} #1}
+% \makeatother
 
 \begin{document}
 
