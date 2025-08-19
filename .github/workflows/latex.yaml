@@ -4,16 +4,19 @@ on:
   push:
     branches: [ main ]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout the repository
+      # 1️⃣ Checkout
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # fetch full history to allow branch creation
 
       # 2️⃣ Restore voucher secret
       - name: Restore voucher secret
@@ -21,36 +24,36 @@ jobs:
         env:
           VOUCHER_B64: ${{ secrets.VOUCHER_B64 }}
 
-      # 3️⃣ Compile LaTeX using xu-cheng/latex-action
+      # 3️⃣ Compile LaTeX
       - name: Compile LaTeX
         uses: xu-cheng/latex-action@v4
         with:
           root_file: 20250826_COMULIS_Welcome.tex
 
-      # 4️⃣ Remove voucher.txt after compilation
+      # 4️⃣ Remove voucher
       - name: Clean up voucher
         run: rm -f voucher.txt
 
-      # 5️⃣ Keep only the PDF
-      - name: Keep only PDF
+      # 5️⃣ Prepare artifact folder
+      - name: Move PDF to artifact folder
         run: |
-          find . -maxdepth 1 ! -name '20250826_COMULIS_Welcome.pdf' ! -name '.' ! -name '.git' -exec rm -rf {} +
+          mkdir public
+          mv 20250826_COMULIS_Welcome.pdf public/
 
-      # 6️⃣ Ensure gh-pages branch exists and deploy PDF
-      - name: Deploy PDF to GitHub Pages
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # Check if gh-pages exists; create if it doesn't
-          if git show-ref --quiet refs/heads/gh-pages; then
-            git checkout gh-pages
-          else
-            git checkout --orphan gh-pages
-            git rm -rf .
-          fi
-          
-          # Copy PDF to branch
-          git add 20250826_COMULIS_Welcome.pdf
-          git commit -m "Deploy PDF"
-          git push -u origin gh-pages --force
+      # 6️⃣ Upload artifact for GitHub Pages
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
