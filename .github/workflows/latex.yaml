@@ -22,6 +22,7 @@ jobs:
       - name: List all .tex files
         id: set-matrix
         run: |
+          # List .tex files in the repo root as JSON array
           FILES=$(ls *.tex | jq -R -s -c 'split("\n")[:-1]')
           echo "tex-files=$FILES" >> $GITHUB_OUTPUT
 
@@ -49,11 +50,15 @@ jobs:
       - name: Clean up voucher
         run: rm -f voucher.txt
 
+      - name: Set PDF filename
+        id: set-pdf
+        run: echo "pdf_path=${{ matrix.texfile%.tex }}.pdf" >> $GITHUB_OUTPUT
+
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v3
         with:
           name: pdf-${{ matrix.texfile }}
-          path: ${{ matrix.texfile/.tex/.pdf }}
+          path: ${{ steps.set-pdf.outputs.pdf_path }}
 
   # 3️⃣ Collect all PDFs and deploy Pages
   deploy:
