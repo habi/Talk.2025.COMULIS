@@ -27,10 +27,10 @@ jobs:
     - name: Prepare PDF for deployment
       run: |
         mkdir -p deploy
-        cp 20250826_COMULIS_Welcome.pdf deploy/
+        cp 20250826_COMULIS_Welcome.pdf deploy/welcome.pdf
 
     - name: Deploy PDF to gh-pages
-      uses: peaceiris/actions-gh-pages@v6
+      uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
@@ -39,9 +39,3 @@ jobs:
         force_orphan: true
         destination_dir: ""
         commit_message: "Update PDF from GitHub Actions"
-      env:
-        PDF_FILE: 20250826_COMULIS_Welcome.pdf
-      run: |
-        mkdir deploy
-        cp $PDF_FILE deploy/
-        echo "PDF deployed."
