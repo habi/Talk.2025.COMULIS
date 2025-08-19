@@ -12,6 +12,8 @@ jobs:
       # 1️⃣ Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # fetch full history to allow branch creation
 
       # 2️⃣ Restore voucher secret
       - name: Restore voucher secret
@@ -34,12 +36,21 @@ jobs:
         run: |
           find . -maxdepth 1 ! -name '20250826_COMULIS_Welcome.pdf' ! -name '.' -exec rm -rf {} +
 
-      # 6️⃣ Deploy PDF directly to GitHub Pages root
+      # 6️⃣ Ensure gh-pages branch exists and deploy PDF
       - name: Deploy PDF to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
-          publish_branch: gh-pages
-          force_orphan: true
-          keep_files: false
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Check if gh-pages exists; create if it doesn't
+          if git show-ref --quiet refs/heads/gh-pages; then
+            git checkout gh-pages
+          else
+            git checkout --orphan gh-pages
+            git rm -rf .
+          fi
+          
+          # Copy PDF to branch
+          git add 20250826_COMULIS_Welcome.pdf
+          git commit -m "Deploy PDF"
+          git push -u origin gh-pages --force
