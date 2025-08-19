@@ -24,7 +24,7 @@ jobs:
         env:
           VOUCHER_B64: ${{ secrets.VOUCHER_B64 }}
 
-      # 3️⃣ Find all .tex files and compile
+      # 3️⃣ Compile all .tex files
       - name: Compile all .tex files
         run: |
           for texfile in *.tex; do
@@ -42,7 +42,18 @@ jobs:
           mkdir -p public
           mv *.pdf public/
 
-      # 6️⃣ Upload artifact for GitHub Pages
+      # 6️⃣ Generate index.html listing all PDFs
+      - name: Generate index.html
+        run: |
+          cd public
+          echo "<!DOCTYPE html><html><head><meta charset='utf-8'><title>PDF List</title></head><body><h1>Compiled PDFs</h1><ul>" > index.html
+          for f in *.pdf; do
+            echo "<li><a href='$f'>$f</a></li>" >> index.html
+          done
+          echo "</ul></body></html>" >> index.html
+          cd ..
+
+      # 7️⃣ Upload artifact for GitHub Pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
