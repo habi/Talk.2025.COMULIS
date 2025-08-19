@@ -1,86 +1,44 @@
-name: Build and Deploy LaTeX PDFs
+name: Build LaTeX PDF and Deploy to GitHub Pages
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
 
 jobs:
-  build_latex:
+  build:
     runs-on: ubuntu-latest
+
     steps:
+      # 1️⃣ Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Restore secret file
-        run: |
-          echo "$VOUCHER" | base64 -d > voucher.txt
+      # 2️⃣ Restore voucher secret
+      - name: Restore voucher secret
+        run: echo "$VOUCHER_B64" | base64 -d > voucher.txt
         env:
-          VOUCHER: ${{ secrets.VOUCHER }}        
+          VOUCHER_B64: ${{ secrets.VOUCHER_B64 }}
 
-      - name: Install LaTeX
-        run: sudo apt-get update && sudo apt-get install -y \
-          texlive-latex-base \
-          texlive-latex-extra \
-          texlive-fonts-recommended \
-          texlive-fonts-extra \
-          texlive-bibtex-extra \
-          latexmk
-
-      - name: Compile COMULIS_microCT
-        run: latexmk -pdf -interaction=nonstopmode -halt-on-error 20250826_COMULIS_microCT.tex
-
-      - name: Compile COMULIS_Welcome
-        run: latexmk -pdf -interaction=nonstopmode -halt-on-error 20250826_COMULIS_Welcome.tex
-
-      - name: Prepare artifact directory
-        run: |
-          mkdir public
-          mv 20250826_COMULIS_microCT.pdf public/
-          mv 20250826_COMULIS_Welcome.pdf public/
-          cat > public/index.html << 'EOF'
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <title>COMULIS Documents</title>
-            <style>
-              body { font-family: Arial, sans-serif; padding: 2em; }
-              h1 { color: #333; }
-              ul { list-style: none; padding: 0; }
-              li { margin: 0.5em 0; }
-              a { text-decoration: none; color: #0066cc; }
-              a:hover { text-decoration: underline; }
-            </style>
-          </head>
-          <body>
-            <h1>COMULIS Documents</h1>
-            <ul>
-              <li><a href="20250826_COMULIS_microCT.pdf">20250826_COMULIS_microCT.pdf</a></li>
-              <li><a href="20250826_COMULIS_Welcome.pdf">20250826_COMULIS_Welcome.pdf</a></li>
-            </ul>
-          </body>
-          </html>
-          EOF
-
-      - name: Upload artifact for Pages
-        uses: actions/upload-pages-artifact@v3
+      # 3️⃣ Compile LaTeX using xu-cheng/latex-action
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v4
         with:
-          path: ./public
+          root_file: 20250826_COMULIS_Welcome.tex
 
-  deploy:
-    needs: build_latex
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      # 4️⃣ Remove voucher.txt after compilation
+      - name: Clean up
+        run: rm -f voucher.txt
+
+      # 5️⃣ Deploy PDF directly to GitHub Pages root
+      - name: Deploy PDF to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          publish_branch: gh-pages
+          force_orphan: true
+          keep_files: false
+          # Only the PDF will be deployed
+        run: |
+          # Remove everything except the PDF
+          find . -maxdepth 1 ! -name '20250826_COMULIS_Welcome.pdf' ! -name '.' -exec rm -rf {} +
