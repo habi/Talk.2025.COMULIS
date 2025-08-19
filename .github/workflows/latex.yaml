@@ -10,39 +10,66 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  # 1️⃣ List all .tex files
+  list-files:
     runs-on: ubuntu-latest
-
+    outputs:
+      tex-files: ${{ steps.set-matrix.outputs.tex-files }}
     steps:
-      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Restore voucher secret (if needed)
+      - name: List all .tex files
+        id: set-matrix
+        run: |
+          FILES=$(ls *.tex | paste -sd "," -)
+          echo "tex-files=$FILES" >> $GITHUB_OUTPUT
+
+  # 2️⃣ Compile each .tex file in parallel
+  build:
+    needs: list-files
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        texfile: [${{ needs.list-files.outputs.tex-files }}]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Restore voucher secret
         run: echo "$VOUCHER_B64" | base64 -d > voucher.txt
         env:
           VOUCHER_B64: ${{ secrets.VOUCHER_B64 }}
 
-      # 3️⃣ Compile all .tex files
-      - name: Compile all .tex files
-        run: |
-          for texfile in *.tex; do
-            echo "Compiling $texfile ..."
-            xu-cheng/latex-action@v4 --root_file "$texfile"
-          done
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: ${{ matrix.texfile }}
 
-      # 4️⃣ Remove voucher
       - name: Clean up voucher
         run: rm -f voucher.txt
 
-      # 5️⃣ Move PDFs to public folder
-      - name: Move PDFs to artifact folder
-        run: |
-          mkdir -p public
-          mv *.pdf public/
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: pdf-${{ matrix.texfile }}
+          path: ${{ matrix.texfile/.tex/.pdf }}
 
-      # 6️⃣ Generate index.html listing all PDFs
+  # 3️⃣ Collect all PDFs and deploy Pages
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all PDF artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: public
+
       - name: Generate index.html
         run: |
           cd public
@@ -53,20 +80,11 @@ jobs:
           echo "</ul></body></html>" >> index.html
           cd ..
 
-      # 7️⃣ Upload artifact for GitHub Pages
-      - name: Upload artifact
+      - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: public
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
