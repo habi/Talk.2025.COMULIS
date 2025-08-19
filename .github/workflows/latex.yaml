@@ -22,7 +22,6 @@ jobs:
       - name: List all .tex files
         id: set-matrix
         run: |
-          # List .tex files in the repo root as JSON array
           FILES=$(ls *.tex | jq -R -s -c 'split("\n")[:-1]')
           echo "tex-files=$FILES" >> $GITHUB_OUTPUT
 
@@ -52,7 +51,10 @@ jobs:
 
       - name: Set PDF filename
         id: set-pdf
-        run: echo "pdf_path=${{ matrix.texfile%.tex }}.pdf" >> $GITHUB_OUTPUT
+        run: |
+          PDF_FILE="${{ matrix.texfile }}"
+          PDF_FILE="${PDF_FILE%.tex}.pdf"
+          echo "pdf_path=$PDF_FILE" >> $GITHUB_OUTPUT
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v3
