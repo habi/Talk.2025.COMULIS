@@ -22,7 +22,7 @@ jobs:
       - name: List all .tex files
         id: set-matrix
         run: |
-          FILES=$(ls *.tex | paste -sd "," -)
+          FILES=$(ls *.tex | jq -R -s -c 'split("\n")[:-1]')
           echo "tex-files=$FILES" >> $GITHUB_OUTPUT
 
   # 2️⃣ Compile each .tex file in parallel
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        texfile: [${{ needs.list-files.outputs.tex-files }}]
+        texfile: ${{ fromJSON(needs.list-files.outputs.tex-files) }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
