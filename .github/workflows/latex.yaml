@@ -26,10 +26,15 @@ jobs:
           root_file: 20250826_COMULIS_Welcome.tex
 
       # 4️⃣ Remove voucher.txt after compilation
-      - name: Clean up
+      - name: Clean up voucher
         run: rm -f voucher.txt
 
-      # 5️⃣ Deploy PDF directly to GitHub Pages root
+      # 5️⃣ Keep only the PDF
+      - name: Keep only PDF
+        run: |
+          find . -maxdepth 1 ! -name '20250826_COMULIS_Welcome.pdf' ! -name '.' -exec rm -rf {} +
+
+      # 6️⃣ Deploy PDF directly to GitHub Pages root
       - name: Deploy PDF to GitHub Pages
         uses: peaceiris/actions-gh-pages@v6
         with:
@@ -38,7 +43,3 @@ jobs:
           publish_branch: gh-pages
           force_orphan: true
           keep_files: false
-          # Only the PDF will be deployed
-        run: |
-          # Remove everything except the PDF
-          find . -maxdepth 1 ! -name '20250826_COMULIS_Welcome.pdf' ! -name '.' -exec rm -rf {} +
