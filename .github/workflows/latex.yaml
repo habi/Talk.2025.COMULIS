@@ -50,12 +50,16 @@ jobs:
       - name: Clean up voucher
         run: rm -f voucher.txt
 
-      - name: Upload PDF if it exists
+      - name: Check PDF
         run: |
-          PDF="${{ matrix.texfile%.tex }}.pdf"
+          PDF="${matrix_texfile%.tex}.pdf"
           if [ -f "$PDF" ]; then
-            echo "Uploading $PDF"
+            echo "Successfully compiled $PDF"
+          else
+            echo "PDF not generated for $matrix_texfile"
           fi
+        env:
+          matrix_texfile: ${{ matrix.texfile }}
 
   # 3️⃣ Deploy all available PDFs
   deploy:
