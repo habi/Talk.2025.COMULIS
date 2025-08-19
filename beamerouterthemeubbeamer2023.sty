@@ -21,12 +21,12 @@
 \def\beamer@ubLanguage{german}
 \ProcessOptionsBeamer
 \mode<presentation>
-\def\beamer@ubLogo{.\images\zblogo_2018_de_rgb.pdf}
+\def\beamer@ubLogo{./images/ub_logo_2018_de_rgb.pdf}
 \ifdefstring{\beamer@ubLanguage}{french}{
-  \def\beamer@ubLogo{.\images\zblogo_2019_fr_rgb.pdf}
+  \def\beamer@ubLogo{./images/ub_logo_2019_fr_rgb.pdf}
 }{}
 \ifdefstring{\beamer@ubLanguage}{english}{
-  \def\beamer@ubLogo{.\images\zblogo_2019_en_rgb.pdf}
+  \def\beamer@ubLogo{./images/ub_logo_2019_en_rgb.pdf}
 }{}
 \RequirePackage{calc}
 \RequirePackage{graphicx}
@@ -37,7 +37,7 @@
         \setlength{\unitlength}{1mm}%
         \begin{picture}(0,0)
             \put(0,-\paperheight){\usebeamercolor[bg]{background canvas}\rule{\paperwidth}{\paperheight}}
-            \put(3.25,-11.1){\ifdefstring{\ub@framecolor}{base}{\includegraphics[width=5mm]{.\images\zblogo_mini_2019.pdf}}{\includegraphics[width=5mm]{.\images\zblogo_mini_2019_white.pdf}}}
+            \put(3.25,-11.1){\ifdefstring{\ub@framecolor}{base}{\includegraphics[width=5mm]{./images/ub_logo_mini_2019.pdf}}{\includegraphics[width=5mm]{./images/ub_logo_mini_2019_white.pdf}}}
             \put(15.2,-1.36){\usebeamercolor[fg]{ub page rule}\rule{\paperwidth-21.2mm}{1.36mm}}
             \put(15.2,-87.6){\usebeamerfont{footline}\insertpagenumber}
             \put(20,-87.6){\usebeamerfont{footline}\insertdate}
