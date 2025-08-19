@@ -1,12 +1,11 @@
 \documentclass[aspectratio=169,12pt]{beamer}
 \usetheme[language=english]{ubbeamer2023}
 
-
 \title{Hello \& Welcome!}
+\subtitle{\href{https://www.ana.unibe.ch/weiterbildung/comulis_training_school/}{COMULIS Training School - Imaging Across Scales}}
 \author{Ruslan Hlushchuk | Benoît Zuber | Yury Belyaev}
 \institute{Institute of Anatomy}
-\date{August 25, 2025 | \href{https://www.ana.unibe.ch/weiterbildung/comulis_training_school/}
-{COMULIS Training School}}
+\date{August 25, 2025}
 
 \usepackage{tcolorbox}
 
@@ -26,7 +25,7 @@
 \begin{tcolorbox}[width=4cm,colframe=ubRed,title=Voucher code]
 				%% Get the currently valid guest voucher here: https://serviceportal.unibe.ch/sp?id=kb_article_view&sysparm_article=KB0010178
 				%% Copy-paste it into the `voucher.tex` file, since "The voucher code must not be published publicly on the internet or other public places, rooms, pinboards or similar."
-				\verbatiminput{voucher.txt}
+                \IfFileExists{voucher.txt}{\verbatiminput{voucher.txt}}{}
 			\end{tcolorbox}
 			\item You will receive your access code by SMS
 		\end{itemize}
