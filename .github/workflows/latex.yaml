@@ -132,6 +132,13 @@ jobs:
         echo "- ✅ Successful: $SUCCESSFUL_COMPILATIONS" >> public/compilation-log.md
         echo "- ❌ Failed: $FAILED_COMPILATIONS" >> public/compilation-log.md
         echo "- 📄 Total files processed: $((SUCCESSFUL_COMPILATIONS + FAILED_COMPILATIONS))" >> public/compilation-log.md
+
+        # Exit with failure only if none succeeded
+        if [ "$SUCCESSFUL_COMPILATIONS" -eq 0 ]; then
+          exit 1
+        else
+          exit 0
+        fi
         
     - name: Install additional LaTeX packages (if needed)
       run: |
