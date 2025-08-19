@@ -1,0 +1,36 @@
+\documentclass[aspectratio=169,12pt]{beamer}
+\usetheme[language=english]{ubbeamer2023}
+
+
+\title{Hello \& Welcome!}
+\author{Ruslan Hlushchuk | Benoît Zuber | Yury Belyaev}
+\institute{Institute of Anatomy}
+\date{August 25, 2025 | \href{https://www.ana.unibe.ch/weiterbildung/comulis_training_school/}
+{COMULIS Training School}}
+
+\usepackage{tcolorbox}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Wi-Fi}
+	\begin{itemize}
+		\item Use \emph{\href{https://www.eduroam.org/}{eduroam}}
+		\item Connect your device to the access point «public-unibe».
+		\begin{itemize}
+			\item Select the menu item \emph{Guest Login}
+			\item Register with your mobile number and the voucher code
+\begin{tcolorbox}[width=4cm,colframe=ubRed,title=Voucher code]
+				%% Get the currently valid guest voucher here: https://serviceportal.unibe.ch/sp?id=kb_article_view&sysparm_article=KB0010178
+				%% Copy-paste it into the `voucher.tex` file, since "The voucher code must not be published publicly on the internet or other public places, rooms, pinboards or similar."
+				\verbatiminput{voucher.txt}
+			\end{tcolorbox}
+			\item You will receive your access code by SMS
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\end{document}
