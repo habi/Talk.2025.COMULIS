@@ -3,7 +3,7 @@ name: Build LaTeX PDF and Publish
 on:
   push:
     branches:
-      - main  # or your default branch
+      - main
 
 jobs:
   build-and-publish:
@@ -16,26 +16,39 @@ jobs:
     - name: Compile LaTeX
       uses: xu-cheng/latex-action@v3
       with:
-        latexmk: true
         root_file: 20250826_COMULIS_Welcome.tex
-
-    - name: Setup Git
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
     - name: Prepare PDF for deployment
       run: |
         mkdir -p deploy
-        cp 20250826_COMULIS_Welcome.pdf deploy/welcome.pdf
+        cp 20250826_COMULIS_Welcome.pdf deploy/welcome.pdf || { echo "ERROR: PDF not found"; ls -l; exit 1; }
 
-    - name: Deploy PDF to gh-pages
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Verify deploy contents (debug)
+      run: |
+        echo "Working dir: $(pwd)"
+        echo "List root:"
+        ls -la
+        echo "List deploy dir:"
+        ls -la deploy || { echo "deploy directory missing"; exit 1; }
+        echo "Show file type and size:"
+        file deploy/welcome.pdf || true
+        stat -c '%n %s bytes' deploy/welcome.pdf || true
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages
-        publish_dir: deploy
-        keep_files: false
-        force_orphan: true
-        destination_dir: ""
-        commit_message: "Update PDF from GitHub Actions"
+        path: deploy
+
+  deploy:
+    needs: build-and-publish
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
