@@ -34,7 +34,7 @@ jobs:
       # 5️⃣ Keep only the PDF
       - name: Keep only PDF
         run: |
-          find . -maxdepth 1 ! -name '20250826_COMULIS_Welcome.pdf' ! -name '.' -exec rm -rf {} +
+          find . -maxdepth 1 ! -name '20250826_COMULIS_Welcome.pdf' ! -name '.' ! -name '.git' -exec rm -rf {} +
 
       # 6️⃣ Ensure gh-pages branch exists and deploy PDF
       - name: Deploy PDF to GitHub Pages
