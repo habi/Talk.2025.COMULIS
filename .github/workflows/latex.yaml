@@ -1,4 +1,4 @@
-name: Build LaTeX PDF and Deploy to GitHub Pages
+name: Build All LaTeX PDFs and Deploy to GitHub Pages
 
 on:
   push:
@@ -14,31 +14,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout
+      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Restore voucher secret
+      # 2️⃣ Restore voucher secret (if needed)
       - name: Restore voucher secret
         run: echo "$VOUCHER_B64" | base64 -d > voucher.txt
         env:
           VOUCHER_B64: ${{ secrets.VOUCHER_B64 }}
 
-      # 3️⃣ Compile LaTeX
-      - name: Compile LaTeX
-        uses: xu-cheng/latex-action@v4
-        with:
-          root_file: 20250826_COMULIS_Welcome.tex
+      # 3️⃣ Find all .tex files and compile
+      - name: Compile all .tex files
+        run: |
+          for texfile in *.tex; do
+            echo "Compiling $texfile ..."
+            xu-cheng/latex-action@v4 --root_file "$texfile"
+          done
 
       # 4️⃣ Remove voucher
       - name: Clean up voucher
         run: rm -f voucher.txt
 
-      # 5️⃣ Prepare artifact folder
-      - name: Move PDF to artifact folder
+      # 5️⃣ Move PDFs to public folder
+      - name: Move PDFs to artifact folder
         run: |
-          mkdir public
-          mv 20250826_COMULIS_Welcome.pdf public/
+          mkdir -p public
+          mv *.pdf public/
 
       # 6️⃣ Upload artifact for GitHub Pages
       - name: Upload artifact
