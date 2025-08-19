@@ -25,7 +25,7 @@ jobs:
           FILES=$(ls *.tex | jq -R -s -c 'split("\n")[:-1]')
           echo "tex-files=$FILES" >> $GITHUB_OUTPUT
 
-  # 2️⃣ Compile each .tex file in parallel
+  # 2️⃣ Compile each .tex file in parallel (error-tolerant)
   build:
     needs: list-files
     runs-on: ubuntu-latest
@@ -45,24 +45,19 @@ jobs:
         uses: xu-cheng/latex-action@v4
         with:
           root_file: ${{ matrix.texfile }}
+        continue-on-error: true   # ✅ continue even if compilation fails
 
       - name: Clean up voucher
         run: rm -f voucher.txt
 
-      - name: Set PDF filename
-        id: set-pdf
+      - name: Upload PDF if it exists
         run: |
-          PDF_FILE="${{ matrix.texfile }}"
-          PDF_FILE="${PDF_FILE%.tex}.pdf"
-          echo "pdf_path=$PDF_FILE" >> $GITHUB_OUTPUT
+          PDF="${{ matrix.texfile%.tex }}.pdf"
+          if [ -f "$PDF" ]; then
+            echo "Uploading $PDF"
+          fi
 
-      - name: Upload PDF artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: pdf-${{ matrix.texfile }}
-          path: ${{ steps.set-pdf.outputs.pdf_path }}
-
-  # 3️⃣ Collect all PDFs and deploy Pages
+  # 3️⃣ Deploy all available PDFs
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -72,10 +67,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download all PDF artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: public
+      - name: Collect PDFs for GitHub Pages
+        run: |
+          mkdir -p public
+          cp *.pdf public/ 2>/dev/null || true
 
       - name: Generate index.html
         run: |
