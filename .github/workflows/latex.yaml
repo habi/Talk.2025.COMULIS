@@ -1,333 +1,80 @@
-name: Build LaTeX and Deploy to GitHub Pages
+name: Build and Deploy LaTeX PDFs
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:  # Allow manual trigger
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
-  build-latex:
+  build_latex:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    
-    - name: Create output directory
-      run: mkdir -p public
-    
-    - name: Install TeX Live and latexmk
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y texlive-full latexmk
-    
-    - name: Find and compile LaTeX files
-      run: |
-        # Find all .tex files in the repository, excluding auxiliary files
-        TEX_FILES=$(find . -name "*.tex" -type f | grep -v "/\." | grep -v -E "\.(aux|bbl|blg|fdb_latexmk|fls|log|out|synctex\.gz|toc|lof|lot|nav|snm|vrb)\.tex$")
-        
-        if [ -z "$TEX_FILES" ]; then
-          echo "No .tex files found!"
-          exit 1
-        fi
-        
-        echo "Found LaTeX files:"
-        echo "$TEX_FILES"
-        
-        # Create latexmk configuration
-        cat > ~/.latexmkrc << 'EOF'
-        $pdf_mode = 1;          # Generate PDF using pdflatex
-        $bibtex_use = 2;        # Use bibtex when needed
-        $clean_ext = "bbl rel %R-blx.bib %R.figlist %R.makefile %R.fls %R.fdb_latexmk %R.glg %R.glo %R.gls %R.ist %R.acn %R.acr %R.alg";
-        $pdflatex = 'pdflatex -interaction=nonstopmode -file-line-error %O %S';
-        $biber = 'biber --debug %O %S';
-        EOF
-        
-        # Alternative configurations - uncomment as needed:
-        # For XeLaTeX: echo '$pdf_mode = 5;' >> ~/.latexmkrc
-        # For LuaLaTeX: echo '$pdf_mode = 4;' >> ~/.latexmkrc
-        # For shell escape: echo '$pdflatex = "pdflatex -shell-escape -interaction=nonstopmode -file-line-error %O %S";' >> ~/.latexmkrc
-        
-        # Create a summary file
-        echo "# LaTeX Compilation Summary" > public/compilation-log.md
-        echo "Compiled on: $(date)" >> public/compilation-log.md
-        echo "Using: latexmk with pdflatex" >> public/compilation-log.md
-        echo "" >> public/compilation-log.md
-        
-        SUCCESSFUL_COMPILATIONS=0
-        FAILED_COMPILATIONS=0
-        
-        # Compile each .tex file
-        for tex_file in $TEX_FILES; do
-          echo "Processing: $tex_file"
-          filename=$(basename "$tex_file" .tex)
-          dir=$(dirname "$tex_file")
-          
-          echo "## $tex_file" >> public/compilation-log.md
-          
-          # Change to the directory containing the .tex file
-          cd "$GITHUB_WORKSPACE/$dir"
-          
-          # Use latexmk for compilation - it handles multiple passes automatically
-          if latexmk -pdf -interaction=nonstopmode "$(basename "$tex_file")" 2>&1 | tee compile.log; then
-            if [ -f "${filename}.pdf" ]; then
-              # Create unique filename to avoid conflicts
-              if [ "$dir" = "." ]; then
-                cp "${filename}.pdf" "$GITHUB_WORKSPACE/public/${filename}.pdf"
-              else
-                # Replace slashes with underscores for subdirectory files
-                safe_dir=$(echo "$dir" | sed 's/[^a-zA-Z0-9]/_/g' | sed 's/^_*//' | sed 's/_*$//')
-                cp "${filename}.pdf" "$GITHUB_WORKSPACE/public/${safe_dir}_${filename}.pdf"
-              fi
-              echo "✅ Successfully compiled with latexmk" >> "$GITHUB_WORKSPACE/public/compilation-log.md"
-              
-              # Show what latexmk processed
-              if grep -q "Biber\|BibTeX" compile.log; then
-                echo "📚 Bibliography processed" >> "$GITHUB_WORKSPACE/public/compilation-log.md"
-              fi
-              if grep -q "Rerun to get cross-references right\|Rerun LaTeX" compile.log; then
-                echo "🔄 Multiple passes completed for references" >> "$GITHUB_WORKSPACE/public/compilation-log.md"
-              fi
-              
-              ((SUCCESSFUL_COMPILATIONS++))
-            else
-              echo "❌ PDF not generated despite successful latexmk run" >> "$GITHUB_WORKSPACE/public/compilation-log.md"
-              echo "Last few lines of log:" >> "$GITHUB_WORKSPACE/public/compilation-log.md"
-              echo '```' >> "$GITHUB_WORKSPACE/public/compilation-log.md"
-              tail -15 compile.log >> "$GITHUB_WORKSPACE/public/compilation-log.md" 2>/dev/null || echo "No log available" >> "$GITHUB_WORKSPACE/public/compilation-log.md"
-              echo '```' >> "$GITHUB_WORKSPACE/public/compilation-log.md"
-              ((FAILED_COMPILATIONS++))
-            fi
-          else
-            echo "❌ latexmk compilation failed" >> "$GITHUB_WORKSPACE/public/compilation-log.md"
-            echo "Error log:" >> "$GITHUB_WORKSPACE/public/compilation-log.md"
-            echo '```' >> "$GITHUB_WORKSPACE/public/compilation-log.md"
-            tail -25 compile.log >> "$GITHUB_WORKSPACE/public/compilation-log.md" 2>/dev/null || echo "No log available" >> "$GITHUB_WORKSPACE/public/compilation-log.md"
-            echo '```' >> "$GITHUB_WORKSPACE/public/compilation-log.md"
-            ((FAILED_COMPILATIONS++))
-          fi
-          
-          # Clean up auxiliary files in the working directory
-          latexmk -c "$(basename "$tex_file")" 2>/dev/null || true
-          
-          echo "" >> "$GITHUB_WORKSPACE/public/compilation-log.md"
-          
-          # Return to workspace root
-          cd "$GITHUB_WORKSPACE"
-        done
-        
-        echo "## Summary" >> public/compilation-log.md
-        echo "- ✅ Successful: $SUCCESSFUL_COMPILATIONS" >> public/compilation-log.md
-        echo "- ❌ Failed: $FAILED_COMPILATIONS" >> public/compilation-log.md
-        echo "- 📄 Total files processed: $((SUCCESSFUL_COMPILATIONS + FAILED_COMPILATIONS))" >> public/compilation-log.md
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-        # Exit with failure only if none succeeded
-        if [ "$SUCCESSFUL_COMPILATIONS" -eq 0 ]; then
-          exit 1
-        else
-          exit 0
-        fi
-        
-    - name: Install additional LaTeX packages (if needed)
-      run: |
-        # Uncomment and modify as needed for your documents
-        # sudo tlmgr update --self
-        # sudo tlmgr install amsmath amsfonts amssymb graphicx geometry hyperref biber
-        echo "LaTeX package installation step - modify as needed"
-        echo "Note: texlive-full includes most common packages"
-    
-    - name: Create index.html for PDF viewing
-      run: |
-        cat > public/index.html << 'EOF'
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
+      - name: Install LaTeX
+        run: sudo apt-get update && sudo apt-get install -y \
+          texlive-latex-base \
+          texlive-latex-extra \
+          texlive-fonts-recommended \
+          texlive-fonts-extra \
+          texlive-bibtex-extra \
+          latexmk
+
+      - name: Compile COMULIS_microCT
+        run: latexmk -pdf -interaction=nonstopmode -halt-on-error 20250826_COMULIS_microCT.tex
+
+      - name: Compile COMULIS_Welcome
+        run: latexmk -pdf -interaction=nonstopmode -halt-on-error 20250826_COMULIS_Welcome.tex
+
+      - name: Prepare artifact directory
+        run: |
+          mkdir public
+          mv 20250826_COMULIS_microCT.pdf public/
+          mv 20250826_COMULIS_Welcome.pdf public/
+          cat > public/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
             <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>LaTeX Document</title>
+            <title>COMULIS Documents</title>
             <style>
-                body {
-                    margin: 0;
-                    padding: 20px;
-                    font-family: Arial, sans-serif;
-                    background-color: #f5f5f5;
-                }
-                .container {
-                    max-width: 1200px;
-                    margin: 0 auto;
-                    background: white;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                    padding: 20px;
-                }
-                h1 {
-                    color: #333;
-                    text-align: center;
-                    margin-bottom: 30px;
-                }
-                .pdf-list {
-                    list-style: none;
-                    padding: 0;
-                }
-                .pdf-item {
-                    margin: 10px 0;
-                    padding: 15px;
-                    background: #f8f9fa;
-                    border-radius: 5px;
-                    border-left: 4px solid #007bff;
-                }
-                .pdf-link {
-                    text-decoration: none;
-                    color: #007bff;
-                    font-weight: bold;
-                    font-size: 16px;
-                }
-                .pdf-link:hover {
-                    color: #0056b3;
-                    text-decoration: underline;
-                }
-                .embed-container {
-                    margin-top: 30px;
-                    text-align: center;
-                }
-                .pdf-embed {
-                    width: 100%;
-                    height: 800px;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
-                }
-                @media (max-width: 768px) {
-                    .pdf-embed {
-                        height: 600px;
-                    }
-                }
+              body { font-family: Arial, sans-serif; padding: 2em; }
+              h1 { color: #333; }
+              ul { list-style: none; padding: 0; }
+              li { margin: 0.5em 0; }
+              a { text-decoration: none; color: #0066cc; }
+              a:hover { text-decoration: underline; }
             </style>
-        </head>
-        <body>
-            <div class="container">
-                <h1>LaTeX Documents</h1>
-                <ul class="pdf-list" id="pdfList">
-                    <!-- PDF files will be listed here -->
-                </ul>
-                <div class="embed-container" id="embedContainer" style="display: none;">
-                    <embed id="pdfEmbed" class="pdf-embed" type="application/pdf">
-                </div>
-            </div>
+          </head>
+          <body>
+            <h1>COMULIS Documents</h1>
+            <ul>
+              <li><a href="20250826_COMULIS_microCT.pdf">20250826_COMULIS_microCT.pdf</a></li>
+              <li><a href="20250826_COMULIS_Welcome.pdf">20250826_COMULIS_Welcome.pdf</a></li>
+            </ul>
+          </body>
+          </html>
+          EOF
 
-            <script>
-                // Get list of PDF files and create links
-                fetch('.')
-                    .then(response => response.text())
-                    .then(html => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-                        const links = doc.querySelectorAll('a[href$=".pdf"]');
-                        const pdfList = document.getElementById('pdfList');
-                        const embedContainer = document.getElementById('embedContainer');
-                        const pdfEmbed = document.getElementById('pdfEmbed');
-                        
-                        // Also check for compilation log
-                        const logResponse = fetch('./compilation-log.md')
-                            .then(r => r.ok ? r.text() : null)
-                            .catch(() => null);
-
-                        if (links.length === 0) {
-                            pdfList.innerHTML = '<li class="pdf-item">No PDF files found. <a href="./compilation-log.md" target="_blank">Check compilation log</a></li>';
-                            return;
-                        }
-                        
-                        // Add compilation log link at the top
-                        logResponse.then(logContent => {
-                            if (logContent) {
-                                const logLi = document.createElement('li');
-                                logLi.className = 'pdf-item';
-                                logLi.style.backgroundColor = '#e3f2fd';
-                                logLi.style.borderLeftColor = '#2196f3';
-                                logLi.innerHTML = `
-                                    <a href="./compilation-log.md" class="pdf-link" target="_blank">
-                                        📋 Compilation Log & Summary
-                                    </a>
-                                    <small style="display: block; margin-top: 5px; color: #666;">
-                                        View detailed compilation results for all LaTeX files
-                                    </small>
-                                `;
-                                pdfList.appendChild(logLi);
-                            }
-                        });
-                        
-                        links.forEach(link => {
-                            const li = document.createElement('li');
-                            li.className = 'pdf-item';
-                            const filename = link.href.split('/').pop();
-                            // Try to make filename more readable
-                            const displayName = filename.replace(/_/g, ' / ').replace('.pdf', '');
-                            li.innerHTML = `
-                                <a href="${link.href}" class="pdf-link" target="_blank">
-                                    📄 ${displayName}
-                                </a>
-                                <button onclick="embedPDF('${link.href}')" style="margin-left: 10px; padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 3px; cursor: pointer;">
-                                    View Inline
-                                </button>
-                                <small style="display: block; margin-top: 5px; color: #666;">
-                                    File: ${filename}
-                                </small>
-                            `;
-                            pdfList.appendChild(li);
-                        });
-                        
-                        // If there's only one PDF, embed it automatically
-                        if (links.length === 1) {
-                            embedPDF(links[0].href);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error loading PDF list:', error);
-                        document.getElementById('pdfList').innerHTML = '<li class="pdf-item">Error loading PDF files</li>';
-                    });
-                
-                function embedPDF(url) {
-                    const embedContainer = document.getElementById('embedContainer');
-                    const pdfEmbed = document.getElementById('pdfEmbed');
-                    pdfEmbed.src = url;
-                    embedContainer.style.display = 'block';
-                    embedContainer.scrollIntoView({ behavior: 'smooth' });
-                }
-            </script>
-        </body>
-        </html>
-        EOF
-    
-    - name: List generated files
-      run: |
-        echo "Files in public directory:"
-        ls -la public/
-    
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: public
+      - name: Upload artifact for Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
 
   deploy:
+    needs: build_latex
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build-latex
-    if: github.ref == 'refs/heads/main'  # Only deploy from main branch
-    
     steps:
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
