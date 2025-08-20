@@ -14,33 +14,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout
+      # Checkout
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Restore voucher secret
+      # Restore voucher secret
       - name: Restore voucher secret
         run: echo "$VOUCHER_B64" | base64 -d > voucher.txt
         env:
           VOUCHER_B64: ${{ secrets.VOUCHER_B64 }}
 
-      # 3️⃣ Compile LaTeX
-      - name: Compile LaTeX
+      # Compile Welcome
+      - name: Compile Welcome
         uses: xu-cheng/latex-action@v4
         with:
           root_file: 20250826_COMULIS_Welcome.tex
 
-      # 4️⃣ Remove voucher
+      # Remove voucher
       - name: Clean up voucher
         run: rm -f voucher.txt
+      
+      # Compile Talk
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: 20250826_COMULIS_microCT.tex
 
-      # 5️⃣ Prepare artifact folder
+      # Prepare artifact folder
       - name: Move PDF to artifact folder
         run: |
           mkdir public
           mv 20250826_COMULIS_Welcome.pdf public/
+          mv 20250826_COMULIS_microCT.pdf public/
 
-      # 6️⃣ Upload artifact for GitHub Pages
+      # Upload artifact for GitHub Pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
