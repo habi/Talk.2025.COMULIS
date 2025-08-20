@@ -51,6 +51,7 @@
 \usepackage{shadowtext}% for the shadowed scalebar
 	\shadowoffset{1pt}
 	\shadowcolor{ubRed}
+\usepackage{qrcode}
 
 % \usepackage{pgfplots}
 
@@ -107,6 +108,14 @@
 	\raisebox{-1.618ex}{%
 		\makebox[0pt][r]{%
 			\scriptsize From \cite{#1}, #2%
+			}%
+		}%
+	}%
+\newcommand{\sourceqr}[1]{%
+	% Cite (an image from) a (long) URL with a QR code
+	\raisebox{-1.618ex}{%
+		\makebox[0pt][r]{%
+			From: \qrcode[height=3.236ex]{#1}%
 			}%
 		}%
 	}%
