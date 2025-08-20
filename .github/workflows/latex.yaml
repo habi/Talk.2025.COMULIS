@@ -1,4 +1,4 @@
-name: Build LaTeX PDFs and Deploy to GitHub Pages
+name: Build LaTeX PDF and Deploy to GitHub Pages
 
 on:
   push:
@@ -10,87 +10,50 @@ permissions:
   id-token: write
 
 jobs:
-  # 1️⃣ List all .tex files
-  list-files:
-    runs-on: ubuntu-latest
-    outputs:
-      tex-files: ${{ steps.set-matrix.outputs.tex-files }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: List all .tex files
-        id: set-matrix
-        run: |
-          FILES=$(ls *.tex | jq -R -s -c 'split("\n")[:-1]')
-          echo "tex-files=$FILES" >> $GITHUB_OUTPUT
-
-  # 2️⃣ Compile each .tex file in parallel (error-tolerant)
   build:
-    needs: list-files
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        texfile: ${{ fromJSON(needs.list-files.outputs.tex-files) }}
+
     steps:
+      # 1️⃣ Checkout
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2️⃣ Restore voucher secret
       - name: Restore voucher secret
         run: echo "$VOUCHER_B64" | base64 -d > voucher.txt
         env:
           VOUCHER_B64: ${{ secrets.VOUCHER_B64 }}
 
+      # 3️⃣ Compile LaTeX
       - name: Compile LaTeX
         uses: xu-cheng/latex-action@v4
         with:
-          root_file: ${{ matrix.texfile }}
-        continue-on-error: true   # ✅ continue even if compilation fails
+          root_file: 20250826_COMULIS_Welcome.tex
 
+      # 4️⃣ Remove voucher
       - name: Clean up voucher
         run: rm -f voucher.txt
 
-      - name: Check PDF
+      # 5️⃣ Prepare artifact folder
+      - name: Move PDF to artifact folder
         run: |
-          PDF="${matrix_texfile%.tex}.pdf"
-          if [ -f "$PDF" ]; then
-            echo "Successfully compiled $PDF"
-          else
-            echo "PDF not generated for $matrix_texfile"
-          fi
-        env:
-          matrix_texfile: ${{ matrix.texfile }}
+          mkdir public
+          mv 20250826_COMULIS_Welcome.pdf public/
 
-  # 3️⃣ Deploy all available PDFs
+      # 6️⃣ Upload artifact for GitHub Pages
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Collect PDFs for GitHub Pages
-        run: |
-          mkdir -p public
-          find . -name '2025*.pdf' -exec cp {} public/ \;
-
-      - name: Generate index.html
-        run: |
-          cd public
-          echo "<!DOCTYPE html><html><head><meta charset='utf-8'><title>PDF List</title></head><body><h1>Compiled PDFs</h1><ul>" > index.html
-          for f in *.pdf; do
-            echo "<li><a href='$f'>$f</a></li>" >> index.html
-          done
-          echo "</ul></body></html>" >> index.html
-          cd ..
-
-      - name: Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: public
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
