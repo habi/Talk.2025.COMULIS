@@ -74,7 +74,7 @@ jobs:
       - name: Collect PDFs for GitHub Pages
         run: |
           mkdir -p public
-          cp *.pdf public/ 2>/dev/null || true
+          find . -name '2025*.pdf' -exec cp {} public/ \;
 
       - name: Generate index.html
         run: |
