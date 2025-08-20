@@ -1,4 +1,4 @@
-\documentclass[aspectratio=169,12pt]{beamer}
+\documentclass[aspectratio=169]{beamer}
 \usetheme[language=english]{ubbeamer2023}
 
 \title{\uct and image analysis}
@@ -8,7 +8,7 @@
 \date{August 26, 2025}
 
 % Some often used abbreviations/commands
-\newcommand{\everyframe}{333}% use only every nth frame for the animations
+\newcommand{\everyframe}{1}% use only every nth frame for the animations
 \newcommand{\imagewidth}{\columnwidth}% set global image width
 \newcommand{\imageheight}{0.7\paperheight}% set global image heidht
 \newlength\imagescale% needed for scalebars
@@ -118,7 +118,7 @@
 			From: \qrcode[height=3.236ex]{#1}%
 			}%
 		}%
-	}%
+	}%	
 
 % % Define us a custom footer *with* progress bar, based on https://tex.stackexchange.com/a/59749/828
 % \makeatletter
@@ -317,7 +317,7 @@
 	% Movie downloaded from https://sites.google.com/a/fulbrightmail.org/kesnersmedicalphysics/home/education/3d-image-reconstruction-explained-with-animated-gifs, sligthly cropped in ImageJ, saved out and PNG images and piped through oxipng
 	\mode<beamer>{\animategraphics[autoplay,loop,height=\imageheight,every=\everyframe]{24}{./movies/scan/sinogram/TOMO_FBP_gif_CT_signed00}{00}{61}\sourceqr{https://sites.google.com/a/fulbrightmail.org/kesnersmedicalphysics/home/education/3d-image-reconstruction-explained-with-animated-gifs}}%
 	\mode<handout>{\includegraphics[height=\imageheight]{./movies/scan/sinogram/acquisition/TOMO_FBP_gif_CT_signed0055}\sourceqr{https://sites.google.com/a/fulbrightmail.org/kesnersmedicalphysics/home/education/3d-image-reconstruction-explained-with-animated-gifs}}%
-
+	
 % \end{frame}
 
 % \begin{frame}
@@ -372,8 +372,8 @@
 				This has practical implications in the field of radiation protection and is the reason why materials with a high \(Z\) such as lead (\(Z= 82\)) are useful shielding materials.
 				The dependence of PEA on \(Z\) and \(E\) means that it is the major contributor to beam attenuation up to approximately 30 keV when human tissues (\(Z=7.4\)) are irradiated.
 				At beam energies above this, the Compton effect predominates.}
-			\item Compton scattering is one of the principle forms of photon interaction and is directly proportional to the (electron \& physical) density of the material.
-				It does \emph{not} depend on the atomic number: \(\lambda' - \lambda = \frac{h}{m_e c}\left(1-\cos{\theta}\right)\)
+		 	\item Compton scattering is one of the principle forms of photon interaction and is directly proportional to the (electron \& physical) density of the material.
+		 		It does \emph{not} depend on the atomic number: \(\lambda' - \lambda = \frac{h}{m_e c}\left(1-\cos{\theta}\right)\)
 			\note{Where \(\lambda\) is the initial wavelength, \(\lambda'\) is the wavelength after scattering, \(h\) is the Planck constant, \(m_e\) is the electron rest mass, \(c\) is the speed of light, and \(\theta\) is the scattering angle.}
 		\end{itemize}
 		\item Lowering x-ray energy increases contrast
