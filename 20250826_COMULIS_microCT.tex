@@ -10,7 +10,7 @@
 % Some often used abbreviations/commands
 \newcommand{\everyframe}{333}% use only every nth frame for the animations
 \newcommand{\imagewidth}{\columnwidth}% set global image width
-\newcommand{\imageheight}{0.618\paperheight}% set global image heidht
+\newcommand{\imageheight}{0.7\paperheight}% set global image heidht
 \newlength\imagescale% needed for scalebars
 \newcommand{\uct}{{\textmu}CT\xspace}% make our life easier
 \newcommand{\eg}{e.\,g.\xspace}%
@@ -188,6 +188,15 @@
 % \renewcommand\@makefntext[1]{\tiny{\usebeamercolor[fg]{footnote mark}\usebeamerfont*{footnote mark}[\@thefnmark]}\enspace\usebeamerfont*{footnote} #1}
 % \makeatother
 
+% Show current section at begin of sections, but only in presentation mode
+\mode<beamer>{%
+	\AtBeginSection[]{%
+		\begin{frame}{Contents}%
+			\tableofcontents[currentsection,currentsubsection,hideothersubsections]%
+		\end{frame}%
+	}%
+}
+
 \begin{document}
 
 \begin{frame}
@@ -210,7 +219,7 @@
 \begin{frame}
 	\frametitle{\uct-group}
 	\begin{columns}
-		\begin{column}{0.61\linewidth}
+		\begin{column}{0.6177\linewidth}
 			\begin{itemize}
 				\item microangioCT~\cite{Hlushchuk2018}
 				\begin{itemize}
@@ -223,7 +232,7 @@
 				\item Automate \emph{all} the things!~\cite{Haberthuer2021, Haberthuer2023}
 			\end{itemize}
 		\end{column}%
-		\begin{column}{0.37\linewidth}%
+		\begin{column}{0.3822\linewidth}%
 			\centering%
 			\includegraphics<1>[width=\imagewidth]{./images/1172}%
 			\only<1>{\source{brukersupport.com}{}}%
@@ -413,7 +422,7 @@
 \begin{frame}
 	\frametitle{How?}
 	\begin{columns}
-		\begin{column}{0.49\linewidth}
+		\begin{column}{0.5\linewidth}
 			\begin{itemize}
 				\item<1-> 104 extracted human permanent mandibular canines
 				\item<2-> \uct imaging
@@ -421,7 +430,7 @@
 				\item<6-> \emph{Reproducible} analysis~\cite{Haberthuer2020a}\onslide<7>{, \eg you can \href{https://mybinder.org/v2/gh/habi/zmk-tooth-cohort/master?filepath=ToothAnalysis.ipynb}{click a button to double-check} or \href{https://nbviewer.jupyter.org/github/habi/zmk-tooth-cohort/blob/master/ToothAnalysis.ipynb}{recalculate the results yourself!}}
 			\end{itemize}
 		\end{column}
-		\begin{column}{0.49\linewidth}
+		\begin{column}{0.5\linewidth}
 			\only<1|handout:1>{%
 				\centering%
 				\renewcommand{\imagewidth}{0.75\linewidth}
@@ -541,13 +550,14 @@
 	\begin{columns}
 		\begin{column}{0.49\linewidth}
 			\begin{itemize}
-				\item 372 tomographic scans of 133 different Cichlids, from \SIrange{6}{18}{\centi\meter}\footcite{Haberthuer2023}
+				\item 372 tomographic scans of 133 different Cichlids, from \SIrange{6}{18}{\centi\meter}
 				\item \SI{9.8}{\tera\byte} of projection images, \SI{1.5}{\tera\byte} of reconstructions
 				\item Reproducible and automated dataset wrangling, checking and image analysis (\href{https://www.python.org/}{\faPython} in \href{https://jupyter.org/}{Jupyter}~\cite{Kluyver2016})
 			\end{itemize}
 		\end{column}
 		\begin{column}{0.49\linewidth}
 			\includegraphics[width=\imagewidth]{./images/cichlids/104016}%
+			\sourcecite{Haberthuer2023}{Fig.~1}%
 		\end{column}
 	\end{columns}
 \end{frame}
@@ -572,13 +582,13 @@
 \begin{frame}
 	\frametitle{Data wrangling by example: Zebrafish}
 	\begin{columns}
-		\begin{column}{0.618\linewidth}
+		\begin{column}{0.3822\linewidth}
 			\begin{itemize}
 				\item Collaboration, part of a \emph{much} bigger story\footcite{Garcia-Poyatos2024}
 				\item Confirmation of results by \uct
 			\end{itemize}
 		\end{column}
-		\begin{column}{0.382\linewidth}
+		\begin{column}{0.6177\linewidth}
 			\centering
 			\includegraphics<1|handout:1>[height=\imageheight]{./images/cox7a/Cell_Fig3}%
 			\only<2|handout:2>{%
@@ -598,7 +608,7 @@
 	\includegraphics<4|handout:4>[height=\imageheight]{./images/cox7a/Volume_Boxplot}%
 \end{frame}
 
-\section{Take home message}
+\section{\emph{Take-home} message}
 \begin{frame}
 	\begin{itemize}
 		\item Ask us anything!
