@@ -212,7 +212,7 @@
 \begin{frame}
 	\titlepage%
 	\begin{flushright}%
-	\qrcode[height=4cm]{https://habi.github.io/Talk.2025.COMULIS/20250826_COMULIS_microCT_handout.pdf}%
+		\mode<beamer>{\qrcode[height=4cm]{https://habi.github.io/Talk.2025.COMULIS/20250826_COMULIS_microCT_handout.pdf}}%
 	\end{flushright}%
 \end{frame}
 
@@ -246,12 +246,12 @@
 		\end{column}%
 		\begin{column}{0.3822\linewidth}%
 			\centering%
-			\includegraphics<1>[width=\imagewidth]{./images/1172}%
-			\only<1>{\source{brukersupport.com}{}}%
-			\includegraphics<2>[width=\imagewidth]{./images/1272}%
-			\only<2>{\source{bruker.com/skyscan1272}{}}%
-			\includegraphics<3>[width=\imagewidth]{./images/2214}%
-			\only<3>{\source{bruker.com/skyscan2214}{}}%
+			\includegraphics<1|handout:0>[width=\imagewidth]{./images/1172}%
+			\only<1|handout:0>{\source{brukersupport.com}{}}%
+			\includegraphics<2|handout:1>[width=\imagewidth]{./images/1272}%
+			\only<2|handout:1>{\source{bruker.com/skyscan1272}{}}%
+			\includegraphics<3|handout:0>[width=\imagewidth]{./images/2214}%
+			\only<3|handout:0>{\source{bruker.com/skyscan2214}{}}%
 		\end{column}%
 	\end{columns}%
 \end{frame}
