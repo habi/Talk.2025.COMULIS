@@ -1,0 +1,50 @@
+\documentclass{standalone}%
+% Draw the setup where the source and detector move, e.g. classic CT
+% With help from https://tex.stackexchange.com/q/515519/828
+\usepackage{fontawesome5}
+\usepackage{ifthen}
+\ifthenelse{\isundefined{\everyframe}}{%
+	% If we're compiling this file via \input, then we already defined some things
+	% In the other case, we need to define them
+	\usepackage{tikz}
+	\usepackage{animate}
+	\newcommand{\everyframe}{5}
+	\definecolor{ubRed}{HTML}{e4003c}%
+	\definecolor{ubGrey}{HTML}{646363}%
+	% split complementary images from https://www.sessions.edu/color-calculator/
+	\definecolor{ubRedComplementary}{HTML}{2EE600}
+	}{}
+\begin{document}
+\begin{animateinline}[loop,every=\everyframe]{25}
+	\multiframe{90}{n=1+4}{%
+		\begin{tikzpicture}[scale=1.25]
+			\pgfdeclarelayer{background}
+			\pgfsetlayers{background,main}
+			%Help lines used to setup the animation (set to semitransparent), drawing them transparent in the presentation forces a consistent size
+			\begin{pgfonlayer}{background}
+				\draw[ubGrey,transparent,help lines,step=5mm] (-2.05,-2.05) grid (2.05,2.05);
+			\end{pgfonlayer}
+			% Stuff that stays put
+			\node[ubRedComplementary] at (0,0) (sample) {\Huge\faUser};
+			% Stuff that moves
+				\begin{scope}[rotate around={\n:(sample)}]
+				% Rotation arc
+				\draw[->, thick,line cap=rect] (1.5,0) arc [start angle=0, end angle=180, radius=1.5];
+				\draw[->, thick,line cap=rect] (-1.5,0) arc [start angle=-180, end angle=0, radius=1.5];
+				% Source
+				\fill[ubRed] (-0.25,1.5) rectangle node (source) {} +(0.5,0.5);
+				\draw[fill=yellow] (0,1.75) circle (0.2);
+				\node at (0,1.735) (radiation) {\small\faRadiation};
+				% Detector and detector edges
+				\fill[gray] (-0.5,-1.75) rectangle node (detector) {} +(1,0.25);
+				\coordinate (dl) at (-0.45,-1.75);
+				\coordinate (dr) at (0.45,-1.75);
+				% X-ray cone
+				\begin{pgfonlayer}{background}
+					\fill[gray,semitransparent] (source.center) -- (dl) -- (dr) -- cycle;
+				\end{pgfonlayer}
+				\end{scope}
+		\end{tikzpicture}
+	}
+\end{animateinline}
+\end{document}
