@@ -309,22 +309,13 @@
 
 \begin{frame}[allowframebreaks]
 	\frametitle{Acquisition}
-	\centering
+	\centering%
 	% Movie frames generated with https://github.com/habi/Lecture.Microtomography/blob/master/Notebooks/FromProjectionsToReconstructions.ipynb
-	\mode<beamer>{\animategraphics[autoplay,loop,height=\imageheight,every=\everyframe]{24}{./movies/scan/projections/KP-TNIKWT02_240_projections_of_940_800_px_}{000}{313}}
-	\mode<handout>{\includegraphics[height=\imageheight]{./movies/scan/projections/KP-TNIKWT02_240_projections_of_940_800_px_000}}
-% \end{frame}
-
-% \begin{frame}
-% 	\frametitle{Acquisition}
-% 	\centering
+	\mode<beamer>{\animategraphics[autoplay,loop,height=\imageheight,every=\everyframe]{24}{./movies/scan/projections/KP-TNIKWT02_240_projections_of_940_800_px_}{000}{313}}%
+	\mode<handout>{\includegraphics[height=\imageheight]{./movies/scan/projections/KP-TNIKWT02_240_projections_of_940_800_px_000}}%
 	% Movie downloaded from https://sites.google.com/a/fulbrightmail.org/kesnersmedicalphysics/home/education/3d-image-reconstruction-explained-with-animated-gifs, sligthly cropped in ImageJ, saved out and PNG images and piped through oxipng
 	\mode<beamer>{\animategraphics[autoplay,palindrome,height=\imageheight,every=\everyframe]{5}{./movies/scan/acquisition/TOMO_gif_CT_signed00}{00}{91}\sourceqr{https://sites.google.com/a/fulbrightmail.org/kesnersmedicalphysics/home/education/3d-image-reconstruction-explained-with-animated-gifs}}%
 	\mode<handout>{\includegraphics[height=\imageheight]{./movies/scan/acquisition/TOMO_gif_CT_signed0020}\sourceqr{https://sites.google.com/a/fulbrightmail.org/kesnersmedicalphysics/home/education/3d-image-reconstruction-explained-with-animated-gifs}}%
-% \end{frame}
-
-% \begin{frame}
-% 	\frametitle{Projections}
 	\begin{itemize}
 		\item A (micro-focus) x-ray source illuminates the object
 		\item The x-rays penetrate the sample and are attenuated
@@ -336,23 +327,12 @@
 
 \begin{frame}[allowframebreaks]
 	\frametitle{Reconstructions}
-	\centering
+	\centering%
 	% Movie downloaded from https://sites.google.com/a/fulbrightmail.org/kesnersmedicalphysics/home/education/3d-image-reconstruction-explained-with-animated-gifs, sligthly cropped in ImageJ, saved out and PNG images and piped through oxipng
 	\mode<beamer>{\animategraphics[autoplay,palindrome,height=\imageheight,every=\everyframe]{24}{./movies/scan/sinogram/TOMO_FBP_gif_CT_signed00}{00}{4}\sourceqr{https://sites.google.com/a/fulbrightmail.org/kesnersmedicalphysics/home/education/3d-image-reconstruction-explained-with-animated-gifs}}%
 	\mode<handout>{\includegraphics[height=\imageheight]{./movies/scan/sinogram/TOMO_FBP_gif_CT_signed0055}\sourceqr{https://sites.google.com/a/fulbrightmail.org/kesnersmedicalphysics/home/education/3d-image-reconstruction-explained-with-animated-gifs}}%
-	
-% \end{frame}
-
-% \begin{frame}
-% 	\frametitle{Reconstructions}
-% 	\centering
-	% Movie frames generated with https://github.com/habi/Lecture.Microtomography/blob/master/Notebooks/FromProjectionsToReconstructions.ipynb
-	\mode<beamer>{\animategraphics[autoplay,palindrome,height=\imageheight,every=\everyframe]{24}{./movies/scan/reconstructions/KP-TNIKWT02_240_reconstructions_of_556_800_px_}{000}{277}}
-	\mode<handout>{\includegraphics[height=\imageheight]{./movies/scan/reconstructions/KP-TNIKWT02_240_reconstructions_of_556_800_px_100}}
-% \end{frame}
-
-% \begin{frame}
-% 	\frametitle{Reconstructions}
+	\mode<beamer>{\animategraphics[autoplay,palindrome,height=\imageheight,every=\everyframe]{24}{./movies/scan/reconstructions/KP-TNIKWT02_240_reconstructions_of_556_800_px_}{000}{277}}%
+	\mode<handout>{\includegraphics[height=\imageheight]{./movies/scan/reconstructions/KP-TNIKWT02_240_reconstructions_of_556_800_px_100}}%
 	\begin{itemize}
 		\item Based on hundreds of angular views acquired while the object rotates, a computer synthesizes a stack of virtual cross section slices through the object.
 		\item Radon Transformation
@@ -371,10 +351,6 @@
 		\mode<handout>{\includegraphics[height=\paperheight]{./movies/scan/visualization/lung000}}%
 		};%
 	\end{tikzpicture}%
-% \end{frame}
-
-% \begin{frame}
-% 	\frametitle{Visualization}
 		\pagebreak
 		\begin{itemize}
 			\item Based on the reconstructions, a computer synthesizes a three-dimensional view of the scanned sample
