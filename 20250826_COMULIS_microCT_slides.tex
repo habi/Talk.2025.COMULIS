@@ -382,8 +382,7 @@
 \subsection{Composition of biological tissues}
 \begin{frame}
 	\frametitle{Composition of biological tissues}
-	Tissue: content by mass percentage
-	\centering
+	\small{%
 	\begin{table}%
 		\only<1>{%
 			\pgfplotstabletypeset[%
@@ -404,12 +403,16 @@
 				every last row/.style={after row=\bottomrule},%
 				% make certain cells ubRed, based on https://tex.stackexchange.com/a/296914/828
 				every row 1 column 2/.style={postproc cell content/.append style={/pgfplots/table/@cell content/.add={\cellcolor{ubRed!61.8}}{}}},%
-				every row 1 column 4/.style={postproc cell content/.append style={/pgfplots/table/@cell content/.add={\cellcolor{ubRed!61.8}}{}}},%
+				every row 2 column 4/.style={postproc cell content/.append style={/pgfplots/table/@cell content/.add={\cellcolor{ubRed!61.8}}{}}},%
+				every row 3 column 4/.style={postproc cell content/.append style={/pgfplots/table/@cell content/.add={\cellcolor{ubRed!61.8}}{}}},%
+				every row 4 column 4/.style={postproc cell content/.append style={/pgfplots/table/@cell content/.add={\cellcolor{ubRed!61.8}}{}}},%
+				every row 5 column 4/.style={postproc cell content/.append style={/pgfplots/table/@cell content/.add={\cellcolor{ubRed!61.8}}{}}},%				
 				every row 6 column 6/.style={postproc cell content/.append style={/pgfplots/table/@cell content/.add={\cellcolor{ubRed!61.8}}{}}},%
 				every row 6 column 10/.style={postproc cell content/.append style={/pgfplots/table/@cell content/.add={\cellcolor{ubRed!61.8}}{}}}%
 			]{./tables/tissue-composition.csv}%
 		}%
-	\end{table}
+	\end{table}%
+	}
 	\note{Bone, lean tissue, fat and air can be distinguished quite easily}
 \end{frame}
 
