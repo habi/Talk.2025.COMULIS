@@ -109,7 +109,13 @@
       \verb 10.1152/ajprenal.00099.2017
       \endverb
       \verb{file}
-      \verb /home/habi/Zotero/storage/Z457KMJX/Hlushchuk et al. - 2017 - Cutting-edge microangio-CT new dimensions in vascular imaging and kidney morphometry.pdf
+      \verb /Users/habi/Zotero/storage/Z457KMJX/Hlushchuk et al. - 2017 - Cutting-edge microangio-CT new dimensions in vascular imaging and kidney morphometry.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1152/ajprenal.00099.2017
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1152/ajprenal.00099.2017
       \endverb
     \endentry
     \entry{Nording2021}{article}{}{}
@@ -279,7 +285,13 @@
       \verb 10.1038/s41467-021-23499-w
       \endverb
       \verb{file}
-      \verb /home/habi/Zotero/storage/2IGTLRPL/s41467-021-23499-w.pdf
+      \verb /Users/habi/Zotero/storage/2IGTLRPL/s41467-021-23499-w.pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://dx.doi.org/10.1038/s41467-021-23499-w
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1038/s41467-021-23499-w
       \endverb
     \endentry
     \entry{Haberthuer2025}{article}{}{}
@@ -385,7 +397,13 @@
       \verb 10.1016/j.tmater.2025.100074
       \endverb
       \verb{file}
-      \verb /home/habi/Zotero/storage/STCCXNIS/Haberthür et al. - 2025 - MicroCT-based vascular imaging in bone and peri-im.html
+      \verb /Users/habi/Zotero/storage/STCCXNIS/Haberthür et al. - 2025 - MicroCT-based vascular imaging in bone and peri-im.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S2949673X25000270
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S2949673X25000270
       \endverb
       \keyw{Biomedical devices,Bone,Contrast agent,Dual energy,Implant,MicroangioCT,MicroCT,Peri-implant tissue,Tomography,Vascular imaging}
     \endentry
@@ -465,7 +483,13 @@
       \verb 10.1007/s00429-020-02158-8
       \endverb
       \verb{file}
-      \verb /home/habi/Zotero/storage/IWK6PIYP/Hlushchuk et al. - 2020 - Innovative high-resolution microCT imaging of animal brain vasculature.pdf
+      \verb /Users/habi/Zotero/storage/IWK6PIYP/Hlushchuk et al. - 2020 - Innovative high-resolution microCT imaging of animal brain vasculature.pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://link.springer.com/10.1007/s00429-020-02158-8
+      \endverb
+      \verb{url}
+      \verb http://link.springer.com/10.1007/s00429-020-02158-8
       \endverb
     \endentry
     \entry{Wuthrich2020}{article}{}{}
@@ -597,7 +621,13 @@
       \verb 10.1016/j.msec.2020.111311
       \endverb
       \verb{file}
-      \verb /home/habi/Zotero/storage/FI29PAE3/Wüthrich et al. - 2020 - Development of vascularized nerve scaffold using perfusion-decellularization and recellularization(3).pdf;/home/habi/Zotero/storage/H7PE4KYH/Wüthrich et al. - 2020 - Development of vascularized nerve scaffold using perfusion-decellularization and recellularization(2).pdf
+      \verb /Users/habi/Zotero/storage/FI29PAE3/Wüthrich et al. - 2020 - Development of vascularized nerve scaffold using perfusion-decellularization and recellularization(3).pdf;/Users/habi/Zotero/storage/H7PE4KYH/Wüthrich et al. - 2020 - Development of vascularized nerve scaffold using perfusion-decellularization and recellularization(2).pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1016/j.msec.2020.111311
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1016/j.msec.2020.111311
       \endverb
     \endentry
     \entry{Zubler2021}{article}{}{}
@@ -663,6 +693,12 @@
       \range{pages}{1}
       \verb{doi}
       \verb 10.1016/j.aanat.2020.151624
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0940960220301680
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0940960220301680
       \endverb
       \keyw{Deep branch,Perforator flap,Reconstructive surgery,Superficial branch,Superficial circumflex iliac artery,Superficial circumflex iliac artery perforator fla}
     \endentry
@@ -740,7 +776,13 @@
       \verb 10.1016/j.ijrobp.2025.07.1427
       \endverb
       \verb{file}
-      \verb /home/habi/Zotero/storage/WSITGRXY/S0360301625060250.html
+      \verb /Users/habi/Zotero/storage/WSITGRXY/S0360301625060250.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S0360301625060250
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S0360301625060250
       \endverb
       \keyw{Drug delivery,gold nanoparticles,Microbeam radiation therapy,Mouse Melanoma,Spatially Fractionated Radiation Therapy - SFRT,Vascular Permeability}
     \endentry
@@ -835,7 +877,13 @@
       \verb 10.1016/j.ijrobp.2021.07.1717
       \endverb
       \verb{file}
-      \verb /home/habi/Zotero/storage/JYNQVSIU/Trappetti et al. - 2021 - Synchrotron Microbeam Radiation Therapy for the Treatment of Lung Carcinoma A Preclinical Study.pdf
+      \verb /Users/habi/Zotero/storage/JYNQVSIU/Trappetti et al. - 2021 - Synchrotron Microbeam Radiation Therapy for the Treatment of Lung Carcinoma A Preclinical Study.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0360301621026304
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0360301621026304
       \endverb
     \endentry
     \entry{Bochud2021}{article}{}{}
@@ -893,7 +941,13 @@
       \verb 10.3897/zookeys.1073.73241
       \endverb
       \verb{file}
-      \verb /home/habi/Zotero/storage/RWXUCG8R/Bochud et al. - 2021 - A new Diancta species of the family Diplommatinidae (Cyclophoroidea) from Vanua Levu Island, Fiji.pdf
+      \verb /Users/habi/Zotero/storage/RWXUCG8R/Bochud et al. - 2021 - A new Diancta species of the family Diplommatinidae (Cyclophoroidea) from Vanua Levu Island, Fiji.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://zookeys.pensoft.net/article/73241/
+      \endverb
+      \verb{url}
+      \verb https://zookeys.pensoft.net/article/73241/
       \endverb
     \endentry
     \entry{Halm2021}{article}{}{}
@@ -949,7 +1003,13 @@
       \verb 10.1186/s40463-021-00522-0
       \endverb
       \verb{file}
-      \verb /home/habi/Zotero/storage/3MDRKJYR/Halm et al. - 2021 - Micro-CT imaging of Thiel-embalmed and iodine-stained human temporal bone for 3D modeling.pdf
+      \verb /Users/habi/Zotero/storage/3MDRKJYR/Halm et al. - 2021 - Micro-CT imaging of Thiel-embalmed and iodine-stained human temporal bone for 3D modeling.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1186/s40463-021-00522-0
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1186/s40463-021-00522-0
       \endverb
     \endentry
     \entry{MesserliAaldijk2020}{article}{}{}
@@ -1049,7 +1109,13 @@
       \verb 10.1371/journal.pone.0228333
       \endverb
       \verb{file}
-      \verb /home/habi/Zotero/storage/WTJU4FVL/Messerli et al. - 2020 - Adaptation mechanism of the adult zebrafish respiratory organ to endurance training(2).pdf
+      \verb /Users/habi/Zotero/storage/WTJU4FVL/Messerli et al. - 2020 - Adaptation mechanism of the adult zebrafish respiratory organ to endurance training(2).pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1371/journal.pone.0228333
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1371/journal.pone.0228333
       \endverb
     \endentry
     \entry{Haberthuer2023}{article}{}{}
@@ -1120,7 +1186,13 @@
       \verb gsst8t
       \endverb
       \verb{file}
-      \verb /home/habi/Zotero/storage/KA9CXT3X/Haberthür et al. - 2023 - Microtomographic investigation of a large corpus o.pdf
+      \verb /Users/habi/Zotero/storage/KA9CXT3X/Haberthür et al. - 2023 - Microtomographic investigation of a large corpus o.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0291003
+      \endverb
+      \verb{url}
+      \verb https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0291003
       \endverb
       \keyw{Data acquisition,Data visualization,Fish biology,Image processing,Jaw,Otolith,Skull,X-ray radiography}
     \endentry
@@ -1173,7 +1245,13 @@
       \verb gjpw2d
       \endverb
       \verb{file}
-      \verb /home/habi/Zotero/storage/5B9UNST7/Haberthür et al. - 2021 - Automated segmentation and description of the inte.pdf;/home/habi/Zotero/storage/7IICXMLR/s12903-021-01551-x.html
+      \verb /Users/habi/Zotero/storage/5B9UNST7/Haberthür et al. - 2021 - Automated segmentation and description of the inte.pdf;/Users/habi/Zotero/storage/7IICXMLR/s12903-021-01551-x.html
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1186/s12903-021-01551-x
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1186/s12903-021-01551-x
       \endverb
       \keyw{Automated segmentation,Biomedical image analysis,Internal tooth morphology,Micro-CT,Physiological foramen geometry,Root canal configuration}
     \endentry
@@ -1197,12 +1275,17 @@
       \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{howpublished}{http://xrayphysics.com/attenuation.html}
       \field{title}{X-{{Ray Physics}}: {{X-Ray Interaction}} with {{Matter}}, {{X-Ray Contrast}}, and {{Dose}}}
       \field{urlday}{6}
       \field{urlmonth}{12}
       \field{urlyear}{2019}
       \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb http://xrayphysics.com/attenuation.html
+      \endverb
+      \verb{url}
+      \verb http://xrayphysics.com/attenuation.html
+      \endverb
     \endentry
     \entry{wiki:beer-lambert}{misc}{}{}
       \name{author}{1}{}{%
@@ -1224,6 +1307,12 @@
       \field{labeltitlesource}{title}
       \field{title}{Beer--{{Lambert}} Law --- {{Wikipedia}}, {{The Free Encyclopedia}}}
       \field{year}{2019}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/w/index.php?title=Beer–Lambert_law&oldid=925859144
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/w/index.php?title=Beer%E2%80%93Lambert_law&oldid=925859144
+      \endverb
     \endentry
     \entry{Kluyver2016}{article}{}{}
       \name{author}{14}{}{%
@@ -1338,7 +1427,7 @@
       \verb 10.3233/978-1-61499-649-1-87
       \endverb
       \verb{file}
-      \verb /home/habi/Zotero/storage/MA5JNYF8/Kluyver et al. - 2016 - Jupyter Notebooks -- a publishing format for reproducible computational workflows.pdf
+      \verb /Users/habi/Zotero/storage/MA5JNYF8/Kluyver et al. - 2016 - Jupyter Notebooks -- a publishing format for reproducible computational workflows.pdf
       \endverb
     \endentry
     \entry{Briseno-Marroquin2015}{article}{}{}
@@ -1402,7 +1491,13 @@
       \verb 10.1016/j.joen.2015.09.007
       \endverb
       \verb{file}
-      \verb /home/habi/Zotero/storage/5FRE65F7/full-text.pdf
+      \verb /Users/habi/Zotero/storage/5FRE65F7/full-text.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0099239915008328
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0099239915008328
       \endverb
       \keyw{Foramina,maxillary first molar,micro-computed tomography,morphology,root canal configuration}
     \endentry
@@ -1435,6 +1530,12 @@
       \field{urldateera}{ce}
       \verb{doi}
       \verb 10.5281/ZENODO.3999402
+      \endverb
+      \verb{urlraw}
+      \verb https://zenodo.org/record/3999402
+      \endverb
+      \verb{url}
+      \verb https://zenodo.org/record/3999402
       \endverb
     \endentry
   \enddatalist
