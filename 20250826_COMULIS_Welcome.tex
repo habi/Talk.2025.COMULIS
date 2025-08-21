@@ -7,27 +7,21 @@
 \institute{Institute of Anatomy}
 \date{August 25, 2025}
 
-\usepackage{tcolorbox}
-
 \begin{document}
 
 \begin{frame}
-  \titlepage
+	\titlepage
 \end{frame}
 
 \begin{frame}{Wi-Fi}
 	\begin{itemize}
-		\item Use \emph{\href{https://www.eduroam.org/}{eduroam}}
-		\item Connect your device to the access point «public-unibe».
+		\item Either use \emph{\href{https://www.eduroam.org/}{eduroam}}
+		\item Or connect your device to \emph{public-unibe}
 		\begin{itemize}
 			\item Select the menu item \emph{Guest Login}
-			\item Register with your mobile number and the voucher code
-\begin{tcolorbox}[width=4cm,colframe=ubRed,title=Voucher code]
-				%% Get the currently valid guest voucher here: https://serviceportal.unibe.ch/sp?id=kb_article_view&sysparm_article=KB0010178
-				%% Copy-paste it into the `voucher.tex` file, since "The voucher code must not be published publicly on the internet or other public places, rooms, pinboards or similar."
-                \IfFileExists{voucher.txt}{\verbatiminput{voucher.txt}}{}
-			\end{tcolorbox}
-			\item You will receive your access code by SMS
+			\item Enter your mobile number
+			\item Enter the voucher code \alert{\input{voucher.txt}}
+			\item Access code is then provided by SMS
 		\end{itemize}
 	\end{itemize}
 \end{frame}
