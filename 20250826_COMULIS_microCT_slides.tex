@@ -92,7 +92,7 @@
 	% Print out (short) link under image, with small text
 	\raisebox{-1ex}{%
 		\makebox[0pt][r]{%
-			\scriptsize\href{http://#1}{#1} #2%
+			\usebeamerfont{footline}\href{http://#1}{#1} #2%
 			}%
 		}%
 	}%
@@ -100,7 +100,7 @@
 	% Make the source command an \href{link}{text}
 	\raisebox{-1ex}{%
 		\makebox[0pt][r]{%
-			\scriptsize\href{http://#1}{#2}, #3%
+			\usebeamerfont{footline}\href{http://#1}{#2}, #3%
 			}%
 		}%
 	}%
@@ -108,7 +108,7 @@
 	% Cite (an image from) a reference
 	\raisebox{-1ex}{%
 		\makebox[0pt][r]{%
-			\scriptsize From \cite{#1}, #2%
+			\usebeamerfont{footline}From \cite{#1}, #2%
 			}%
 		}%
 	}%
