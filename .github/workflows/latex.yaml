@@ -35,10 +35,16 @@ jobs:
         run: rm -f voucher.txt
       
       # Compile Talk
-      - name: Compile LaTeX
+      - name: Compile presentation
         uses: xu-cheng/latex-action@v4
         with:
           root_file: 20250826_COMULIS_microCT.tex
+
+      # Compile Talk
+      - name: Compile presentation handout
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: 20250826_COMULIS_microCT_handout.tex
 
       # Prepare artifact folder
       - name: Move PDF to artifact folder
@@ -46,6 +52,7 @@ jobs:
           mkdir public
           mv 20250826_COMULIS_Welcome.pdf public/
           mv 20250826_COMULIS_microCT.pdf public/
+          mv 20250826_COMULIS_microCT_handout.pdf public/
 
       # Upload artifact for GitHub Pages
       - name: Upload artifact
