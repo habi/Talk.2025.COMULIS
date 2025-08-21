@@ -42,17 +42,22 @@
 \usepackage{tikz}
 % 	\usetikzlibrary{spy}
  	\tikzset{shadowed/.style={preaction={transform canvas={shift={(1pt,-1pt)}},draw=ubRed}}}
-
+\usepackage{standalone}
 \usepackage{listings}
 	\lstset{frame=single,
 		backgroundcolor = \color{ubGrey!38.2},
 		basicstyle=\tiny\ttfamily
 		}
-
 \usepackage{shadowtext}% for the shadowed scalebar
 	\shadowoffset{1pt}
 	\shadowcolor{ubRed}
 \usepackage{qrcode}
+\usepackage{mathastext}
+
+% Define complementary colors to ubRed=e4003c, which is defined in the .sty file
+% https://duckduckgo.com/?t=lm&q=html+e4003c&ia=answer
+\definecolor{ubRedComplementary}{HTML}{00E3A6}
+
 
 % \usepackage{pgfplots}
 
